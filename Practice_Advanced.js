@@ -52,3 +52,32 @@ function flatten(array) {
 	}
 	return newArray;
 }
+
+// 4. Write a function called "flattenObj" that flattens a object to number array.
+// const obj = {
+// 	a: 1,
+// 	b: [2, 3],
+// 	c: null,
+// 	d: { e: 4 },
+// 	f: [5, 6, { g: 7 }],
+// };
+// console.log(flattenObj(obj));
+// expected output [1, 2, 3, 4, 5, 6, 7]
+
+function flattenObj(obj) {
+	const results = [];
+	function search(obj) {
+		switch (typeof obj) {
+			case "object":
+				if (obj == null) return;
+				if (Array.isArray(obj)) obj.forEach((item) => search(item));
+				else Object.keys(obj).forEach((key) => search(obj[key]));
+				break;
+			case "number":
+				results.push(obj);
+				break;
+		}
+	}
+	search(obj);
+	return results;
+}
